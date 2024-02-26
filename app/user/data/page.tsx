@@ -1,34 +1,27 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { useEffect,useState } from "react";
+import axios from "axios";
 
-interface Item {
-    name: string;
-    email: string;
-}
+const Example = () => {
 
-const Home: React.FC = () => {
-    const [items, setItems] = useState<Item[]>([]);
+    const [users,setUsers ] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/user/data`)
-            .then(response => response.json())
-            .then(response => {
-                setItems(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching items:', error);
-            });
-    });
+        const getUser = async () => {
+            const res = await axios.get('http://localhost:8080/api/user/data')
+            console.log(res.data);
+            setUsers(res.data);
+        }
+        getUser();
+    })
 
-  return (
-    <div>
-                    {items.map((item,index) => (
-                        <div key={index}>
-                            <h3>email: {item.email} :{item.name}</h3>
-                        </div>
-                    ))}
-    </div>
-  );
+    return (
+        <div>
+            <h3>{users.name}</h3>
+            <h3>{users.email}</h3>
+        </div>
+    )
 };
 
-export default Home;
+export default Example;
+
