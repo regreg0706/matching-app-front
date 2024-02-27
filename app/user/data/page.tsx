@@ -4,16 +4,19 @@ import axios from "axios";
 
 const Example = () => {
 
-    const [users,setUsers ] = useState([])
+    const [users,setUsers ] = useState({ name: "", email: "" })
 
     useEffect(() => {
-        const getUser = async () => {
+        async function getUser() {
             const res = await axios.get('http://localhost:8080/api/user/data')
             console.log(res.data);
             setUsers(res.data);
+            return res;
+
         }
         getUser();
-    })
+
+    },[]);
 
     return (
         <div>
